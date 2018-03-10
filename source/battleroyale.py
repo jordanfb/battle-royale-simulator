@@ -27,6 +27,20 @@ class Entity:
 		self.components.remove(component)
 		# possibly do more, but hey...
 
+	def has_component(self, componentType):
+		# returns true if there is a component of type componentType in this entity
+		# componentType is a string like "Brain" or "Inventory"
+		for component in self.components:
+			if componentType == component.componentType:
+				return True
+		return False
+
+	def has_components(self, componentTypeList):
+		for componentType in componentTypeList:
+			if !(self.has_component(componentType)):
+				return False
+		return True
+
 	def fire_event(event):
 		# handle the event or distribute it to your children
 		# return whether or not it eats the event

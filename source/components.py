@@ -42,8 +42,8 @@ class Component:
 		return False, False
 
 class EXAMPLECOMPONENT(Component):
-	def __init__(self, componentType, parameters, parent):
-		super().__init__(componentType, parameters, parent)
+	def __init__(self, parameters, parent):
+		super().__init__("componentName", parameters, parent)
 
 	def fire_event(self, event):
 		# return whether or not it eats the event, and whether or not it changed it
@@ -51,9 +51,9 @@ class EXAMPLECOMPONENT(Component):
 			return self.handle_get_actions(event)
 		return False, False
 
-class VisibleComponent(Component):
-	def __init__(self, componentType, parameters, parent):
-		super().__init__(componentType, parameters, parent)
+class Visible(Component):
+	def __init__(self, parameters, parent):
+		super().__init__("Visible", parameters, parent)
 
 	def fire_event(self, event):
 		if (event.ID == "GetActions"):
@@ -63,9 +63,9 @@ class VisibleComponent(Component):
 			return False, True
 		return False, False
 
-class PhysicalComponent(Component):
-	def __init__(self, componentType, parameters, parent):
-		super().__init__(componentType, parameters, parent)
+class Physical(Component):
+	def __init__(self, parameters, parent):
+		super().__init__("Physical", parameters, parent)
 		self.ensure_exists("weight", 1) # weight is in grams I guess?
 		self.ensure_exists("volume", 1) # in cubic cm?
 
@@ -78,8 +78,8 @@ class PhysicalComponent(Component):
 
 
 class DisplayName(Component):
-	def __init__(self, componentType, parameters, parent):
-		super().__init__(componentType, parameters, parent)
+	def __init__(self, parameters, parent):
+		super().__init__("DisplayName", parameters, parent)
 		self.ensure_exists("spacing", "")
 		self.ensure_exists("displayName", "")
 
@@ -97,8 +97,8 @@ class DisplayName(Component):
 
 class DamageType(Component):
 	# changes the damage type of an attack when you look for the damage caused. It will eventually at least...
-	def __init__(self, componentType, parameters, parent):
-		super().__init__(componentType, parameters, parent)
+	def __init__(self, parameters, parent):
+		super().__init__("DamageType", parameters, parent)
 		#self.ensure_exists("flamable", 0)
 		self.ensure_exists("damageTypes", [])
 		# a list of damage types and how much it hurts?
@@ -112,8 +112,8 @@ class DamageType(Component):
 		return False, False
 
 class Health(Component):
-	def __init__(self, componentType, parameters, parent):
-		super().__init__(componentType, parameters, parent)
+	def __init__(self, parameters, parent):
+		super().__init__("Health", parameters, parent)
 		self.ensure_exists("hp", 100)
 
 	def fire_event(self, event):
@@ -135,8 +135,8 @@ class Health(Component):
 		return False, False
 
 class Inventory(Component):
-	def __init__(self, componentType, parameters, parent):
-		super().__init__(componentType, parameters, parent)
+	def __init__(self, parameters, parent):
+		super().__init__("Inventory", parameters, parent)
 		self.ensure_exists("inventory", []) # add things to the inventory I guess
 		self.ensure_exists("useWeightLimit", False)
 		self.ensure_exists("weightLimit", -1)
@@ -184,10 +184,23 @@ class Inventory(Component):
 
 		return False, False
 
+class Static(Component):
+	def __init__(self, parameters, parent):
+		super().__init__("Static", parameters, parent)
+
+	def fire_event(self, event):
+		# this component is just to place on things like trees or meadows or lakes that never move so it's reasonable to assume it will always be
+		# there for the brain. I think I'll need this I'm just not sure
+		"""
+		if (event.ID == "GetActions"):
+			return self.handle_get_actions(event)
+		"""
+		return False, False
+
 class Brain(Component):
 	"""this is the decision making component for players and for gamemakers and whatever"""
-	def __init__(self, componentType, parameters, parent):
-		super().__init__(componentType, parameters, parent)
+	def __init__(self, parameters, parent):
+		super().__init__("Brain", parameters, parent)
 
 	def fire_event(self, event):
 		# return whether or not it eats the event, and whether or not it changed it
@@ -198,8 +211,9 @@ class Brain(Component):
 componentList = {
 # start with the base component classes
 # "Component":Component,
-"Visible":VisibleComponent,
-"Physical":PhysicalComponent,
+"Visible":Visible,
+"Physical":Physical,
+"Static":Static,
 
 # more specific components
 "DisplayName":DisplayName,

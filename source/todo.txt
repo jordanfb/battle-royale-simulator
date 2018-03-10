@@ -1,0 +1,7 @@
+*TODO*
+-Most of everything
+-Inventories should have carrying capacity (should be dealt with in the action system already, just not in the component yet)
+-relationships
+	-requirements and results based on relationships
+-hasSeen requirement
+	-used for running away, and possibly other things like sneak attacks
