@@ -5,3 +5,19 @@
 	-requirements and results based on relationships
 -hasSeen requirement
 	-used for running away, and possibly other things like sneak attacks
+-opaque inventory components that hide their contents from item requests through sight.
+	-a bag hides the food inside, a sheathe shows the sword hanging in it
+
+
+
+Stats the AI has to keep track of, and let's think about how these relate to the goals they should have:
+Hunger
+Tiredness
+Trust for p1
+Trust for p2
+etc.
+Health (HP or by body part)
+Fear
+Sanity (?)
+Squeamishness -- prevents from killing, or lets them be a cannibal
+Loneliness

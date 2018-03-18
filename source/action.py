@@ -77,12 +77,43 @@ Thus, for requirements there have to be different stages:
 A = item in hands
 B = item in total player inventory -- including hands
 C = item not in hands -- I don't know if I need a general thing like this, since inventories will give the option to take that item out of it
-C.5 = item in player inventory -- this is for clothing, bags, sheeths, items strapped onto you, etc. Player takes off the coat. Player takes off the backpack.
+C.5 = item in player inventory -- this is for clothing, bags, sheaths, items strapped onto you, etc. Player takes off the coat. Player takes off the backpack.
 D = item in specific inventory? This is usefull for bags etc., because they give the option: take item out of bag
 # E = item visible -- allows the player to go over to it and pick it up? I don't think this is neccessary, since nearby will include this.
 F = item nearby -- allows the player to go over to it and do something to it? These are items seen, heard, and felt added by the sense components
 
+So this thing kinda works, but it needs to be changed a significant amount.
+Just applying and reverting changes in world state would work for forward planning, but backwards planning makes much more sense to me as a performant solution, if
+not more sense in how to create it.
 
+
+Thoughts part 2:
+I'm reading a book about AI planning, and here are some thoughts vaguely based on a STRIPS system. Perhaps it's closer to ADL
+There is going to be a goal state. Assume everything in the goal is required for the plan to be a success, but also know that the side effects are going to be how
+we keep track of what plan is the best, for instance, a faster plan is better, as is one that makes people like you more (assuming of course that the player stats are
+set to prefer being liked). Unmentioned facts about the world can be brought in to the goal state as required in whatever state they need to be, but then they have
+to be satisfied by the actions taken in the plan to become the ones in the current world.
+goal = {whatever player is my top priority for keeping alive is alive, and all the rest are dead} -- also most of these actions will have to require the player be alive
+otherwise the plan of keeping someone else alive is going to involve killing yourself then killing everyone else
+Also, main goals can be broken up, for instance killing one player is a subgoal of killing all of them, and they can be planned separately, probably.
+
+The brain will have a blackboard that updates information about the game world. For instance, when planning, the AI will assume that all players are at the same
+health as they were last when it last saw them. If it sees a player and they're hurt (probably just represented by HP for now), it will save that information,
+(admittedly they may be able to heal over time... I'm not certain now...) but that would prevent them from trying to over-kill them. ALternatively we just have them
+over-kill them and then they stay dead.
+
+The AIs may share a list of all possible game objects so they can try applying them all to their actions. This makes sense because it allows for them to be aware of
+the existence of things like wooden spears, which they would then have to craft from a stick, without having to forwards plan. This also allows them to evaluate the
+costs of having to find weapons versus fashioning them versus using what they already have. Come to think of it, rather than having a list of all game objects, the AI
+should be able to search for all gameobjects in the world and those possible to be made (or have a shared bullitin board of them). This allows for them to hit players
+with other players. Hopefully that will have negative costs though, since it wouldn't be that effective compared to a sword, and the AI would have to track them down
+first. This does lead to another issue that I've had before -- other agent action. This isn't quite classical AI, so I may have to look elsewhere or at chapter 12,
+but counter-planning would be cool. That may be min-max though, which could be very costly...
+Counter-planning and avoidance of danger...
+
+Thinking about partial ordered plans, many plans are really threads of plans that can be pursued simulatneously. This is good for cases like looking for weapons at the
+same time as looking for water. If you look for water but stumble upon a sword you shouldn't walk past it (unless I've gotten really accurate health simulations and
+you have no strength, but that's going to happen, lol), you should pick it up and keep searching for water.
 """
 
 #Action([{}, {}])
