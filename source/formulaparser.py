@@ -12,9 +12,11 @@ class Parser:
 		pass
 
 	def parse(self, string_eqn):
-		"""returns a listEqn from a stringEqn, which can then be evaluated"""
-		"""example: (1-(1-self[health])*self[trust][target[name]])*40	becomes:
-					[[1, "-", [[1, "-", "self[health]"], "*", "self[trust][target[name]]"]], "*", 40]
+		"""returns a listEqn from a stringEqn, which can then be evaluated
+		example:(1-(1-self[health])*self[trust][target[name]])*40	becomes:
+				[[1, "-", [[1, "-", "self[health]"], "*", "self[trust][target[name]]"]], "*", 40]
+				except actually it becomes:
+				[[1.0, <built-in function sub>, [[1.0, <built-in function sub>, 'self[health]'], <built-in function mul>, 'self[trust][target[name]]']], <built-in function mul>, 40.0]
 		"""
 		# remove all the bad characters
 		# print(string_eqn)
@@ -41,9 +43,10 @@ class Parser:
 			elif string_eqn[i] in indent_chars:
 				# then recursively find out what that section is
 				found = False
-				for other_end in range(len(string_eqn)-1, -1, -1):
+				layers_further_in = 0
+				for other_end in range(i+1, len(string_eqn)):
 					# find the other end of the indentation
-					if string_eqn[other_end] in deindent_chars:
+					if string_eqn[other_end] in deindent_chars and layers_further_in == 0:
 						# then if the length of the indented area > 0 then recursively call
 						if other_end - i > 0:
 							# then add the result to the list equation
@@ -51,6 +54,10 @@ class Parser:
 							found = True
 							i = other_end # skip over the section we've already recursively done
 							break
+					elif string_eqn[other_end] in deindent_chars:
+						layers_further_in -= 1
+					if string_eqn[other_end] in indent_chars:
+						layers_further_in += 1
 				if not found:
 					print("Error finding subsection of string equation:", string_eqn)
 			elif string_eqn[i] in operators:
@@ -119,12 +126,17 @@ class Parser:
 				# then recursively call this function
 				found = False
 				subsection = ""
-				for closing_bracket in range(len(string_value)-1, -1, -1):
-					if string_value[closing_bracket] == "]":
+				layers_further_in = 0
+				for closing_bracket in range(i+1, len(string_value)):
+					if string_value[closing_bracket] == "]" and layers_further_in == 0:
 						if closing_bracket - i > 0:
 							found = True
 							subsection = self.evaluate_string_value(string_value[i+1:closing_bracket], variables)
 							i = closing_bracket
+					elif string_value[closing_bracket] == "]":
+						layers_further_in -= 1
+					elif string_value[closing_bracket] == "[":
+						layers_further_in += 1
 				# then evaluate the current_section with the right we got here using an event
 				if current_section in variables and len(subsection) > 0:
 					gameobject = variables[current_section]
