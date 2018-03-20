@@ -1,18 +1,7 @@
 import json
 from components import *
 import sys
-
-class Event:
-	def __init__(self, ID, parameters = {}):
-		self.ID = ID # a string
-		self.parameters = parameters # a dictionary
-
-class GetActionEvent(Event):
-	# this is just so I don't have to create this every time I want to get events...
-	def __init__(self):
-		self.ID = "GetActions"
-		self.parameters = {"actions":[]}
-
+import event
 
 class Entity:
 	def __init__(self, world):
