@@ -2,6 +2,7 @@ import json
 from components import *
 import sys
 import event
+import formulaparser
 
 class Entity:
 	def __init__(self, world):
