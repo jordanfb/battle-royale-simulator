@@ -5,3 +5,86 @@
 	-requirements and results based on relationships
 -hasSeen requirement
 	-used for running away, and possibly other things like sneak attacks
+
+
+Thinking about what I'm doing here:
+It has been a while since I've worked on this, so things are slightly fuzzy, which may be good to
+ensure that I'm thinking straight about how I've planned this.
+
+Currently this branch is working on using utility AIs to play the game. Basically I'm building the
+framework to create a bunch of actions that query tribute objects for their stats that give the
+chance to do each action and then pick one randomly, carry it out, change the stats of each player
+and then keep on going until they die.
+
+I have a list of stats which the tributes have which are set by the players/game makers.
+Those stats are used by the actions using my formula parser class to calculate the chance of choosing
+it.
+
+What I still need to do:
+I could scratch the ECS and just have it be class based: I need an AI class, a weapon class, and
+some objects in the arenas which could be counted as weapons? IDK. Or everything could inherit from
+a physical object class and then just work nicely. That would make some sense. I may do that.
+
+Then the "game" class which runs the games would just run an update loop and update each character,
+recieve what action they do or continue to do, and send that to the players to do.
+
+That would mean I really have to focus on actions then.
+Actions would be great if they were interruptable, such as sleeping, which you can leave early.
+Perhaps actions have a formula to use to quit early. If the formula is above a certain percent (also
+given by the action data) then it quits early because that makes sense.
+Actions have several ways to quit though. Sleep can be woken up because of a loud noise, searches
+can end because they run out of time, they find what they were looking for, or they find something
+else.
+Those are three reasons why it would end. fudgeeee. Perhaps actions are story items in some ways?
+They have different chances for different actions. The chances can be evaluated using player skills.
+So if they're attacking someone else, they have a chance to miss (if the other player is small or good at dodging or you're just that bad), you have a chance to hit, a chance to hit in a different way, and chances to do other things as well. They can have several behaviors. They can cause you to drop an item, pick up an item, to destroy an item, to create an item. They can obviously infuluence stats of each of the items, people, and whatever in the context of the event. That makes some sense.
+Each of the outcomes of the action can have different time ranges, also equations that are evaluated.
+
+This makes a good amount of sense. I'm making a story after all.
+
+How do arena events tie into this? IDK.
+How do group events tie into this? IDK.
+I'm glad those are both the same length.
+
+Arena events are really just dangers. They make the player more scared, probably.
+There are group events which are easy enough to see if they work together, because they both trust
+each other enough. How do we indicate that two AI are doing an action though?
+Every action should be able to support multiple people? (Not actually, but I'm just saying there
+aren't special actions which are for multiple people, that would be silly.)
+How does an action handle multiple people? Two examples of multiple AI actions:
+Two tributes attack a third.
+Two tributes search for water.
+
+Two tributes attack a third makes some sense -- each one essentailly evaluates as its own single person action, but the text nmay be unique? But if the text is unique that makes it harder.
+
+Jordan and Tristan attack Bob. Jordan swings his sword at bob, but Bob blocks it with a stick.
+Tristan throws a knife at Bob, it hits him in the left shoulder. (perhaps include right versus left handedness for extra detail? That would be a stat that could be requested in the formula.)
+Bob should be at a disadvantage for having to deal with two attacks, so it's not just a regular attack? How do I represent that? Perhaps there's a business stat which gets set if the tribute is doing something like crafting a weapon or sleeping which then makes them surprised or something?
+If it's each action by itself then it's easy to handle X number of tributes, but it's harder to have each attack change on the previous ones. I still think that's the way to go though. How would I change that to handle things though? I don't think I will for at least the earliest version.
+
+How does finding water work? For finding things, it's an all or nothing thing. The find ends with something new found, like water, or a weapon, or an item sent from a sponsor, or a different tribute.
+The find action is pretty special though, since it involves moving them around probably. IDK.
+So evidently multiple person actions can either handle themselves as a bunch of single person actions or as a single action that applies to every instigator and reciever in the same way.
+That sounds pretty cool.
+
+Perhaps it makes the most sense to handle things with "alliances." Where you can join an alliance:
+Jordan and Tristan band together. Jordan and Tristan go their separate ways.
+Where once you join a group you have your actions decided as part of the group? That makes some sense
+but it should probably be like the GOAP which has highly weighted goals (in my case action) which the tribute is likely to do but not guaranteed. For instance searching for things as a group should be highly weighted for the individuals to follow if people want to do it?
+How does the group allow for betraying the group though? If you don't trust them a lot then you betray them. Does that mean we need two different stats though? Outwards liking people and inwards liking people? That makes sense probably, although it's more work for people creating people.
+The group can let someone in if everyone in the group outwardly likes the new person above a certain amount.
+Then once you're in the group you're given what everyone else in the group has decided to do as a possible action?
+If you betray the group then people loose all real trust in you probably.
+
+How do environmental things work? Perhaps they are reprensented by AI themselves? That would be interesting. Monkeys are obviously AI, but things like fire or tsunamis?
+
+How would fire be an AI? The fire has actions it can take if it's close enough? Actions like "Burn him"
+
+Lets get some base stuff down, I can always re-write it later.
+For now, scratch the ECS, and just use inheritance and custom actions.
+GameObject class for physical things in the playing field
+AI class for objects that can plan
+Physical object class for objects that can be used to attack or gain health or whatever.
+Basically that's it for the beginning at least
+
+The physical objects are the ones that give the actions to the AI for the most part, except for things like FindObjectAILikes or whatever. They can discribe themselves in the data that they are described with. Duh.
