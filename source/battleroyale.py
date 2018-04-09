@@ -3,105 +3,80 @@ from components import *
 import sys
 import event
 import formulaparser
+import random
 
-class Entity:
-	def __init__(self, world):
-		self.components = []
-		self.world = world # the world is probably used by most of the components that have to do things in the world, like eyes, or inventory, or attacking nearby things,
+class GameObject:
+	"""This is representative of physical objects, they have attributes, and they have actions
+	that they can do. They also have descriptions etc. These things are loaded from a text file."""
+	def __init__(self):
+		self.id = -1
+		self.world = None
+		self.attributes = {"id":self.id, "world":self.world}
 
-	def add_component(component):
-		self.components.append(component)
-		# possibly do something more like register what components need to be updated or something...
+	def update(self, dt):
+		"""GameObjects by default don't have agency but they may still do things..."""
+		pass
 
-	def remove_component(component):
-		self.components.remove(component)
-		# possibly do more, but hey...
+	def set_world_info(self, id, world):
+		self.id = id
+		self.attributes["id"] = id
+		self.world = world
+		self.attribuets["world"] = world
 
-	def has_component(self, componentType):
-		# returns true if there is a component of type componentType in this entity
-		# componentType is a string like "Brain" or "Inventory"
-		for component in self.components:
-			if componentType == component.componentType:
-				return True
-		return False
+	def get_attribute(self, attribute):
+		if attribute not in self.attributes:
+			return None
+		return self.attributes[attribute]
 
-	def has_components(self, componentTypeList):
-		for componentType in componentTypeList:
-			if !(self.has_component(componentType)):
-				return False
-		return True
+class Intelligence:
+	"""This is a class representing an intelligence which decides what actions to take.
+	For now this will likely be a simple utility AI"""
+	def __init__(self):
+		self.id = -1
+		self.world = None
+		self.attributes = {"id":self.id, "world":self.world}
 
-	def fire_event(event):
-		# handle the event or distribute it to your children
-		# return whether or not it eats the event
-		hasBeenChanged = False
-		for component in component:
-			eaten, changed = component.fire_event(event)
-			hasBeenChanged = hasBeenChanged or changed
-			if (eaten):
-				return True, hasBeenChanged
-		# we may or may not have it so that entities eat events at the end no matter what, but for now it wasn't eaten so it returns false
-		# I think it should return false, because if an event gets sent to this entity from another it will return back to that entity,
-		# if the world sends an event to everything or something like that though, it will continue until it's eaten or nothing takes it
-		return False, hasBeenChanged
+	def set_world_info(self, id, world):
+		self.id = id
+		self.attributes["id"] = id
+		self.world = world
+		self.attribuets["world"] = world
 
+	def update(self, dt):
+		# get actions from self
+		# get actions from surrounding world
+		# choose action
+		# tell world what action you're doing.
+		pass
 
-class Factory:
-	# builds objects from the blueprints file out of components
-	def __init__(self, filename = "blueprints.txt"):
-		# load blueprints
-		self.filename = filename
-		self.blueprints = {} # this gets overwritten by load_blueprints
-		self.load_blueprints(self.filename)
-
-	def create(self, blueprint):
-		# return the created blueprint
-		if blueprint not in self.blueprints:
-			print("ERROR: blueprint '" + blueprint + "' not found")
-			sys.exit(0)
-		blueprint = self.blueprints[blueprint]
-		parts = blueprint["parts"]
-		# then create an entity and add the various components
-		entity = Entity()
-		for part in parts:
-			partName = part[0]
-			partParameters = part[1]
-			if (partName not in componentList.keys()):
-				print("ERROR: part '" + partName + "' not found")
-				sys.exit(0)
-			# otherwise create the part and let it set the parameters
-			createdPart = componentList[partName](partName, partParameters, entity) # the entity is the parent
-			# then attach the part
-			entity.add_component(createdPart)
-		return entity
-
-	def load_blueprints(self, filename):
-		file = open(filename)
-		text = file.read()
-		try:
-			self.blueprints = json.loads(text)
-		except:
-			print("ERROR: blueprints failed to load correctly")
-		file.close()
-
+	def get_attribute(self, attribute):
+		if attribute not in self.attributes:
+			return None
+		return self.attributes[attribute]
 
 class World:
+	"""This is the class that holds all of the objects in it and handles updating them.
+	This is then used by whatever class deals with the output and messenger to deal with updating
+	everyone else."""
 	def __init__(self):
-		# keeps track of time, and where things are located, and conditions, and 
-		pass
+		self.current_id = 1 # what to use for the next thing you create in the world
+		self.gameObjects = []
+		self.intelligences = []
+		self.attributes = {"id":0, "world":self}
 
-	def fire_event(event):
-		# this is a bastard son, it will fire the event to everything in the world I guess? But it can also recieve events like requests for what time it is and how bright it is in a certain location...
-		# eyes and ears use this event to request information about what's around them I guess...
-		pass
+	def update(self, dt):
+		"""sort list of objects randomly then update everything in this world"""
+		random.shuffle(self.gameObjects)
+		for item in self.gameObjects:
+			description = item.update(dt)
 
+	def add_to_world(self, thing):
+		"""add this to the world"""
+		thing.set_world_info(self.current_id, self)
+		self.gameObjects.append(thing)
+		self.current_id += 1
 
-
-class Games:
-	# this is the main class that handles the games I guess. This stores the world state and everything in it and whatever...
-	def __init__(self):
-		self.gameObjectFactory = Factory()
-
-	def update(self, time):
-		# update everything that updates itself in the world I guess? brains, eyes, ears, touch, world time
-		pass
+	def get_attribute(self, attribute):
+		if attribute not in self.attributes:
+			return None
+		return self.attributes[attribute]
