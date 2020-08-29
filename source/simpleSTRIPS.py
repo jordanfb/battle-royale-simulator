@@ -40,6 +40,10 @@ the current unstatisfied world state because they aren't useful towards making y
 """
 
 
+# use BFS (prioritizing by fewest actions) for forward planning or use distance from goal using a simple measurement. Currently BFS makes much shorter paths
+USE_BFS = True
+
+
 class StripsWorld:
 	def __init__(self, stateIn=None):
 		self.state = {} # a dictionary of bools
@@ -257,7 +261,28 @@ class SimpleSTRIPSPlanner:
 				if h not in visited:
 					visited.add(h)
 					action_list_clone = [a for a in current_state[2]] + [action]
-					frontier += [[clone, self.goalstate.compare_states(clone), action_list_clone]]
+					distance = self.goalstate.compare_states(clone) # the distance from the goal state
+					if USE_BFS:
+						frontier += [[clone, distance, action_list_clone]]
+					else:
+						# this version sorts by distance than # actions
+						num_new_actions = len(action_list_clone)
+						for i, v in enumerate(frontier):
+							if v[1] >= distance:
+								# then compare number of actions
+								j = i
+								while j < len(frontier) and frontier[j][1] == distance:
+									# compare the number of actions so you can now prioritize those with fewer actions
+									if len(frontier[j][2]) > num_new_actions:
+										# then insert yourself at index j
+										break
+									j += 1
+								# insert the clone here
+								frontier.insert(j, [clone, distance, action_list_clone])
+								break # you've found where you should insert the new one so exit this loop
+						else:
+							# it didn't find any smaller than the new distance so place yourself at the back
+							frontier += [[clone, distance, action_list_clone]]
 					if (self.goalstate >= clone):
 						print("NUMBER OF TRIED PLANS: " + str(tried_plans))
 						print("NUMBER OF PLANS ON FRONTIER: " + str(len(frontier)))
@@ -287,7 +312,7 @@ if __name__ == "__main__":
 	startingKeys = {"logsInInventory":0, "sticksInInventory":0, "hasAxe":False, "characterLocation":"hut", "moneyInInventory":0}
 	startingWorld = StripsWorld(startingKeys)
 	print(startingWorld)
-	goalKeys = {"moneyInInventory":10}
+	goalKeys = {"moneyInInventory":20}
 	goalWorld = StripsWorld(goalKeys)
 	print(goalWorld)
 	print("Has goal already succeded? " + str(goalWorld >= startingWorld))
@@ -326,7 +351,7 @@ if __name__ == "__main__":
 	#actions.append(SimpleSTRIPSAction("Magically get money", 0, [], [SimpleSTRIPSChange("Add 1 money to inventory", "moneyInInventory", "+=", 1)]))
 
 	planner = SimpleSTRIPSPlanner("Woodcutter", startingWorld, goalWorld, actions)
-	success, plan, final_state = planner.forward_plan()
+	success, plan, final_state = planner.forward_plan(100000)
 	print(planner.plan_string(plan))
 	print("Final State: " + str(final_state))
 	print("Did it make it? " + str(success))

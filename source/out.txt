@@ -1,0 +1,50 @@
+{'logsInInventory': 0, 'sticksInInventory': 0, 'hasAxe': False, 'characterLocation': 'hut', 'moneyInInventory': 0}
+{'moneyInInventory': 20}
+Has goal already succeded? False
+NUMBER OF TRIED PLANS: 273143
+NUMBER OF PLANS ON FRONTIER: 11109
+Plan by Woodcutter
+Starting State {'logsInInventory': 0, 'sticksInInventory': 0, 'hasAxe': False, 'characterLocation': 'hut', 'moneyInInventory': 0}
+ACTION Hut To Woods : {'logsInInventory': 0, 'sticksInInventory': 0, 'hasAxe': False, 'characterLocation': 'woods', 'moneyInInventory': 0}
+ACTION Gather Sticks : {'logsInInventory': 0, 'sticksInInventory': 1, 'hasAxe': False, 'characterLocation': 'woods', 'moneyInInventory': 0}
+ACTION Gather Sticks : {'logsInInventory': 0, 'sticksInInventory': 2, 'hasAxe': False, 'characterLocation': 'woods', 'moneyInInventory': 0}
+ACTION Gather Sticks : {'logsInInventory': 0, 'sticksInInventory': 3, 'hasAxe': False, 'characterLocation': 'woods', 'moneyInInventory': 0}
+ACTION Gather Sticks : {'logsInInventory': 0, 'sticksInInventory': 4, 'hasAxe': False, 'characterLocation': 'woods', 'moneyInInventory': 0}
+ACTION Woods To Hut : {'logsInInventory': 0, 'sticksInInventory': 4, 'hasAxe': False, 'characterLocation': 'hut', 'moneyInInventory': 0}
+ACTION Hut To Store : {'logsInInventory': 0, 'sticksInInventory': 4, 'hasAxe': False, 'characterLocation': 'store', 'moneyInInventory': 0}
+ACTION Sell stick : {'logsInInventory': 0, 'sticksInInventory': 3, 'hasAxe': False, 'characterLocation': 'store', 'moneyInInventory': 0.5}
+ACTION Sell stick : {'logsInInventory': 0, 'sticksInInventory': 2, 'hasAxe': False, 'characterLocation': 'store', 'moneyInInventory': 1.0}
+ACTION Sell stick : {'logsInInventory': 0, 'sticksInInventory': 1, 'hasAxe': False, 'characterLocation': 'store', 'moneyInInventory': 1.5}
+ACTION Sell stick : {'logsInInventory': 0, 'sticksInInventory': 0, 'hasAxe': False, 'characterLocation': 'store', 'moneyInInventory': 2.0}
+ACTION Buy axe : {'logsInInventory': 0, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'store', 'moneyInInventory': 0.0}
+ACTION Store To Hut : {'logsInInventory': 0, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'hut', 'moneyInInventory': 0.0}
+ACTION Hut To Woods : {'logsInInventory': 0, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'woods', 'moneyInInventory': 0.0}
+ACTION Chop down tree : {'logsInInventory': 5, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'woods', 'moneyInInventory': 0.0}
+ACTION Chop down tree : {'logsInInventory': 10, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'woods', 'moneyInInventory': 0.0}
+ACTION Chop down tree : {'logsInInventory': 15, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'woods', 'moneyInInventory': 0.0}
+ACTION Chop down tree : {'logsInInventory': 20, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'woods', 'moneyInInventory': 0.0}
+ACTION Woods To Hut : {'logsInInventory': 20, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'hut', 'moneyInInventory': 0.0}
+ACTION Hut To Store : {'logsInInventory': 20, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'store', 'moneyInInventory': 0.0}
+ACTION Sell log : {'logsInInventory': 19, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'store', 'moneyInInventory': 1.0}
+ACTION Sell log : {'logsInInventory': 18, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'store', 'moneyInInventory': 2.0}
+ACTION Sell log : {'logsInInventory': 17, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'store', 'moneyInInventory': 3.0}
+ACTION Sell log : {'logsInInventory': 16, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'store', 'moneyInInventory': 4.0}
+ACTION Sell log : {'logsInInventory': 15, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'store', 'moneyInInventory': 5.0}
+ACTION Sell log : {'logsInInventory': 14, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'store', 'moneyInInventory': 6.0}
+ACTION Sell log : {'logsInInventory': 13, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'store', 'moneyInInventory': 7.0}
+ACTION Sell log : {'logsInInventory': 12, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'store', 'moneyInInventory': 8.0}
+ACTION Sell log : {'logsInInventory': 11, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'store', 'moneyInInventory': 9.0}
+ACTION Sell log : {'logsInInventory': 10, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'store', 'moneyInInventory': 10.0}
+ACTION Sell log : {'logsInInventory': 9, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'store', 'moneyInInventory': 11.0}
+ACTION Sell log : {'logsInInventory': 8, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'store', 'moneyInInventory': 12.0}
+ACTION Sell log : {'logsInInventory': 7, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'store', 'moneyInInventory': 13.0}
+ACTION Sell log : {'logsInInventory': 6, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'store', 'moneyInInventory': 14.0}
+ACTION Sell log : {'logsInInventory': 5, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'store', 'moneyInInventory': 15.0}
+ACTION Sell log : {'logsInInventory': 4, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'store', 'moneyInInventory': 16.0}
+ACTION Sell log : {'logsInInventory': 3, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'store', 'moneyInInventory': 17.0}
+ACTION Sell log : {'logsInInventory': 2, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'store', 'moneyInInventory': 18.0}
+ACTION Sell log : {'logsInInventory': 1, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'store', 'moneyInInventory': 19.0}
+ACTION Sell log : {'logsInInventory': 0, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'store', 'moneyInInventory': 20.0}
+Hopefully ending at goal state: {'moneyInInventory': 20}
+Final State: {'logsInInventory': 0, 'sticksInInventory': 0, 'hasAxe': True, 'characterLocation': 'store', 'moneyInInventory': 20.0}
+Did it make it? True
