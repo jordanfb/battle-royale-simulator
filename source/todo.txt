@@ -88,3 +88,42 @@ Physical object class for objects that can be used to attack or gain health or w
 Basically that's it for the beginning at least
 
 The physical objects are the ones that give the actions to the AI for the most part, except for things like FindObjectAILikes or whatever. They can discribe themselves in the data that they are described with. Duh.
+
+
+
+
+
+
+
+Thoughts as of 9/2/2020
+I made a simple royale test that just has a bunch of actions you can choose from. While I could go ahead and add a ton of actions to that I kinda feel like it's not an incredibly useful tact. If I make very granular actions it's just going to be an incredibly granular story that is difficult to follow the train of.
+Instead I'm wondering if it's possible to simulate the story arc of every character probably in parallel.
+That or perhaps telling each character's story individually without jumping between them? It would work great for this style of story so each person can follow their own character's actions (and perhaps even influence them?) and then afterwards (or perhaps during) everyone can talk about what they're doing. The story would be larger chunks that are slotted between each other instead of just a single action that they take or whatever.
+
+How do I do this? If I do it agent based then it's still pretty similar? If I do it narrative arc based then I need to figure something out.
+
+How do I describe a narrative arc? It's a conflict, rising and falling. Lots of drama. Ups and downs.
+
+Imaginary story arc:
+When the cannon fires Jordan runs towards the cornucopia to try to grab a weapon. He tries to grab a trident but it is stolen away by Joe just before he gets there. Joe swings the trident wildly at Jordan, forcing him to back up. Jordan grabs a small knife and flees into the forest.
+
+In this case each task is like 5 seconds long, basically DnD rounds, but the words are smoothed together to be nicer.
+It's basically.
+
+Jordan is in a clearing. Jordan sees the cornucopia. Jordan sees a trident. Jordan sees [a lot of other irrelevant stuff].
+Jordan hears the starting cannon fire. Jordan runs towards a trident. Joe grabs a trident. Jordan can't grab the trident. Joe tries to attack Jordan with a trident. Jordan runs away from Joe. Jordan runs towards a small knife. Jordan picks up a small knife. Jordan runs away from [any number of people at the cornucopia]. Jordan enters a forest.
+
+Those can be combined into nicer sentences maybe? If I can combine other tasks with your tasks then it sounds more interesting.
+
+
+When [hear_input_sentence], [action_sentence].
+When Jordan hears the starting cannon fire he runs towards a trident. Joe grabs it and swings at Jordan.
+
+Needs to define sentence info like what the subject of a sentence is to combine them nicely and do things like replace names with pronouns if the subject stays the same. Store the most recent subject of a sentence so that you have a chance of replacing the full name with the pronouns. That and using memory to remember if you've been to a place before like mentioned in the github issue.
+Jordan runs [back] to the cornucopia. Fleshes it out a little more.
+
+Jordan thought that Joe was far away but Joe ran into the clearing.
+Maybe rather than having actions you have goals that you slowly accomplish? That way they inherently allow for failure and other interesting end states?
+
+Jordan falls asleep with the goal of sleeping until morning, but he fails and gets woken up? That's still a complicated goal that was interrupted not just succeeded or failed. But to be fair that's true of trying to grab the trident as well...
+These goals can be interrupted by state changes. For instance, trying to get an object can be interrupted by someone else picking up the object. Sleeping can be interrupted by feeling pain. So I may need listeners that keep track of state change? Instead of that perhaps I have a few get/set functions for all objects that set string keys of a dictionary.

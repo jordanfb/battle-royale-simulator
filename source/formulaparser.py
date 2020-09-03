@@ -105,9 +105,9 @@ class Parser:
 		"""
 		i = 0
 		# the values can only be: list, operator, or float/int constants, and the equation is asserted to be 3 long, with the middle a function I guess
-		if type(list_eqn) == type(1.0):
+		if isinstance(list_eqn, (float, int)):
 			return list_eqn
-		elif type(list_eqn) == type(""):
+		elif isinstance(list_eqn, str):
 			return self.evaluate_string_value(list_eqn, variables)
 		# otherwise, evaluate the left and right and do the operator to both of them
 		# the list_eqn is a list:
@@ -148,4 +148,7 @@ class Parser:
 			else:
 				current_section += string_value[i]
 			i += 1
+		if current_section in variables and isinstance(variables[current_section], (float, int)):
+			# then we can directly evaluate the values!
+			return variables[current_section]
 		return current_section
