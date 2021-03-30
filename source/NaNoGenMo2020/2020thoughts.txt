@@ -1,0 +1,73 @@
+
+
+These are my thoughts about this attempt at making the hunger games simulator. I moved a bunch of thoughts about actions out of the actions file into this file to keep it clean.
+
+
+
+# This is a list of actions that will hopefully be able to be parsed. They fall into one of several base actions which are actions that are interpreted via the script, and then have a certain weight and chance of happening and failure vs sucess etc. based on what other tags the characters in the event have.
+# Hmmm maybe I should include my formula parser and use that...
+
+
+
+# action name, base action, prerequisites for even considering it, formula for considering it?, then if it gets chosen there's a list of outcomes with their formulas for chance of occuring
+
+
+
+move_cautiously, move {
+	requires: person.agent, person.cautious
+	can't have: person.immobile, person.scared
+	chance of picking: =(1-person.excited*.5+person.healthy)
+	results {
+		discover_person: [=(.5), set_tag:person.location = helperfunction(find_location_with_person_excluding(person))],
+		move_to_new_location: 
+	}
+}
+
+
+sneak_attack, attack {
+	requires: person.agent, subject, person.sees.subject
+	can't have: subject.sees.person
+	results {
+		// a highish chance of attacking the person with no attack back, or of it being very devastating or something.
+	}
+}
+
+Or perhaps it should just be using tags and for now have no formulas to parse it? Or we just have weights actually with no variables on the weights that is a bit more user friendly for a first pass. The tags still are rather complicated though...
+I kinda need a way to invert subtags in the middle of them... like subject can't have vigilant for a sneak attack, but I suppose that can go in the can't have...
+
+sneak_attack: attack
+prereqs: {[subject], [object], object.agent, [subject].sees.[object], [object]!sees.[subject]}
+results:
+{
+	{.25, event: [subject] attack [object]}
+	{.75, [object].stunned += 5turns, event: [subject] attack [object]}
+}
+
+
+
+I could divide up all the actions into just a couple base actions and then custom versions of those actions depending on the tags that the players have.
+Thus sneak attack is a part of the attack action,
+There are:
+Attack
+Move
+Hide
+Seek(?) probably just move? Unless you can seek certain objects, but that could just be a special move too?
+
+Anything else?
+
+Return?
+Rest?
+Eat?
+Think?
+There could be random flavor text items as well?
+I suppose you could just have random events that give random tags that are hidden, like making you hungry, or sleepy or tired, and then a generic action that changes your tags around but doesn't have anything special? Is there a difference between the generic action and a move action? Yeah, because move requires figuring out location issues and attack requires dealing with health, not just tags.
+
+
+
+I think that makes a lot of sense!
+We have
+Attack
+Move
+Seek (could be part of move?)
+and a generic one that just changes tags! (this is used for hide and a bunch of other things!)
+Sweet this makes sense to me.

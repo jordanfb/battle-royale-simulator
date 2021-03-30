@@ -1,0 +1,75 @@
+This document is just going to be full of ideas for systems and strategies.
+
+
+9/6/2020
+
+One thing that I'm really interested in is making coherent plots and overarching narratives.
+While simulating agents forwards makes sense simulation-wise and is fun, simulating events backwards may be simpler.
+If I make a simple "narrative graph" backwards from the winner of the hunger games, back to the beginning where no one is dead, that way I can figure out where people are spatially and work backwards from there, that's so much faster than having to do it forwards isn't it! Plus I can then decide what people's states are at the time of death to split them up and create betrayals and even more! The one thing that it doesn't do well with is that it doesn't easily work with input states. If you have static skill levels that don't change then that works pretty well, but it's difficult for things like friendship status that can change? Unless we just say that it doesn't change but allow for a sliding scale?
+
+It allows for narrative to be created not have it emerge.
+
+I suppose that it can also search for a world in which the friendships end up somewhat similar to how they're input by the players?
+
+It focuses on the most important aspects of the narrative -- the deaths/kills and how they happen -- and lets us plot and control the pacing of them and how they happen and why they happen, letting us control the overall intensity of the plot as well. I really like this idea!
+
+Jordan, Joe, Schuyler, Tom
+Schuyler wins
+Thus, someone has to die. Tom.
+Looking at the stats, Schuyler stabs Tom with a sword.
+Thus he needs a sword. Let's use a planner to say he got the sword by killing Jordan, who had the sword. We can just say he killed Jordan with a rock.
+Now Jordan (with a sword), Schuyler, and Tom exist.
+Random chance says that Tom drowned Joe. Now we know that that death occured near a body of water.
+We can say it's a betrayal as well, so Joe thought that Tom wanted to team up.
+Thus Tom and Joe have to both head towards a stream.
+Jordan picks up the sword from wherever he is.
+Just insert the beginning in: Everyone starts at the cornucopia.
+
+
+
+This is kinda just the planner isn't it? Welp, but that still works and it's a planner but with realizing that I can plan for more things like death times etc.
+We can try for a climactic finish by trying to get a bunch of deaths close to the end, or we can try for a slow burn after a lot of deaths near the start, or we can just randomly assign a chance of a death happening.
+Obviously you can also add in events that aren't deaths or are just filler to add content and a bit more story. If two people like each other (since they need to for a betrayal to happen) then they can hang out and tell tales of home!
+
+Obviously a death sets up the encounter too, why did they meet? Is one person looking for water and the other person drinking it? Are they friends and traveling together? It adds story in!
+
+Hmmm it kinda would be super cool if I was able to make the abstract "kill graph" and then flush it out with more details after that? Work from abstract to detailed specific narrative events. That may be difficult though.
+
+This solution does let you track what each person does individually though, it just needs to be displayed backwards obviously.
+
+I think simplest version works well first then make it more complicated for NaNoGenMo or something.
+
+
+
+Schuyler's stats:
+Stats
+	Personality
+		Courage - Odds of fight or flight
+		Disposition - Odds of being on a team
+		Loyalty - Odds of betraying a teammate
+	Mental
+		Survival - Used for Nature Challenges and Checks
+		Fortitude - Used for Sanity Challenges and Checks
+		Charisma - Used for Social Challenges and Checks
+		Awareness - Used for Perception Challenges and Checks
+	Physical
+		Initiative - Used to determine who acts first
+		Athletics - Used for Fitness Challenges and Checks
+		Maybe movement speed?
+		Melee Fighting - Used for Combat Challenge if using melee weapon
+		Finesse - Used for Stealth Challenges and Checks
+		Ranged Fighting - Used for Combat Challenge if using ranged weapon
+		Stamina - Used for Constitution Challenges and Checks
+
+
+That's like a lot of stats though...
+I'm gonna simplify it.
+Then again, having a bunch of personalities does mean you can have a lot of specific death types that make things more interesting...
+
+We can use things like fight vs flight to figure out if they'll take part in any murder situations. If they're very high flight then perhaps they just have an encounter with someone but run away...
+
+
+Thoughts about narrative arcs:
+
+https://en.wikipedia.org/wiki/The_Seven_Basic_Plots
+https://en.wikipedia.org/wiki/Vladimir_Propp -- does fairy tale stuff
